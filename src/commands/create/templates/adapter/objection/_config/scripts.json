@@ -1,0 +1,3 @@
+{
+  "knex": "dotenv -c '.env' -- npx knex --knexpath dist/db/config/index.js --knexfile dist/knexfile.cjs"
+}

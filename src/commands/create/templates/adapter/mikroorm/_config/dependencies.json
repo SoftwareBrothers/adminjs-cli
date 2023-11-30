@@ -1,0 +1,4 @@
+{
+  "@adminjs/mikroorm": "^3.0.0",
+  "@mikro-orm/core": "^5.9.4"
+}

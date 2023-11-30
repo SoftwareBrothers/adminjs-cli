@@ -1,0 +1,9 @@
+{
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./dist/db/config.js",
+      "./src/db/config.ts"
+    ]
+  }
+}

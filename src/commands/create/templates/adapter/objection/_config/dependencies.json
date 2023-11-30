@@ -1,0 +1,6 @@
+{
+  "@adminjs/objection": "^2.0.0",
+  "ajv-formats": "^2.1.1",
+  "objection": "^3.0.1",
+  "knex": "^2.4.2"
+}

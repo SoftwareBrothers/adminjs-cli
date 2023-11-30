@@ -1,0 +1,6 @@
+{
+  "typeorm": "dotenv -c '.env' -- typeorm -d \"./dist/db/datasource.js\"",
+  "migration:generate": "yarn typeorm migration:generate",
+  "migration:run": "yarn typeorm migration:run",
+  "migration:rollback": "yarn typeorm migration:revert"
+}

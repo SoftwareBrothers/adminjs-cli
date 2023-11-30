@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "target": "esnext",
+    "sourceMap": false,
+    "declaration": true,
+    "outDir": "./lib",
+    "declarationDir": "./types",
+    "emitDeclarationOnly": false,
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", "src/commands/**/templates/**/*"],
+  "include": [
+    "src/commands/**/*",
+    "src/cli.ts",
+    "src/types.ts",
+    "src/index.ts"
+, "src/instructions.ts"  ]
+}
