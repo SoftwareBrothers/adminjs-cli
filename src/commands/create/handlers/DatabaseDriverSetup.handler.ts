@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import chalk from 'chalk';
 
 import logger from '../../../utils/logger.js';
-import { AdminJSAdapter, CreateCommandPromptsAnswers } from '../types.js';
+import { AdminJSAdapter, CreateCommandInput } from '../types.js';
 import { BaseCommandHandler } from '../utils/BaseCommandHandler.js';
 
 import { EnvironmentVariablesHandler } from './EnvironmentVariables.handler.js';
@@ -67,14 +67,14 @@ export interface DriverInfo {
   dialectName: string;
 }
 
-export class DatabaseDriverSetupHandler extends BaseCommandHandler<CreateCommandPromptsAnswers> {
+export class DatabaseDriverSetupHandler extends BaseCommandHandler<CreateCommandInput> {
   protected driverLibrary: typeof DB_DRIVERS_LIBRARIES[keyof typeof DB_DRIVERS_LIBRARIES];
 
   protected dialectName: string;
 
   private environmentVariablesHandler: EnvironmentVariablesHandler;
 
-  constructor(options: CreateCommandPromptsAnswers, environmentVariablesHandler: EnvironmentVariablesHandler) {
+  constructor(options: CreateCommandInput, environmentVariablesHandler: EnvironmentVariablesHandler) {
     super(options);
 
     this.environmentVariablesHandler = environmentVariablesHandler;

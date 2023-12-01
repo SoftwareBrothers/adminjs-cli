@@ -5,7 +5,7 @@ import { copy } from 'fs-extra/esm';
 import chalk from 'chalk';
 
 import logger from '../../../utils/logger.js';
-import { AdminJSAdapter, AdminJSPlugin, CreateCommandPromptsAnswers } from '../types.js';
+import { AdminJSAdapter, AdminJSPlugin, CreateCommandInput } from '../types.js';
 import { templatesDir } from '../utils/templates-dir.js';
 import { BaseCommandHandler } from '../utils/BaseCommandHandler.js';
 import { CONFIG_DIR_NAME, CONTENT_DIR_NAME, SCRIPTS_DIR_NAME } from '../constants.js';
@@ -22,12 +22,12 @@ export interface LibrarySetupHandlerConfiguration {
   type: LibraryType;
 }
 
-export class LibrarySetupHandler extends BaseCommandHandler<CreateCommandPromptsAnswers> {
+export class LibrarySetupHandler extends BaseCommandHandler<CreateCommandInput> {
   protected libraryType: LibraryType;
 
   protected libraryName: AdminJSAdapter | AdminJSPlugin;
 
-  constructor(options: CreateCommandPromptsAnswers, libraryType: LibraryType) {
+  constructor(options: CreateCommandInput, libraryType: LibraryType) {
     super(options);
 
     this.libraryType = libraryType;

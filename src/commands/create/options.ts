@@ -14,7 +14,7 @@ export const pluginOptions = [
   { title: '@adminjs/fastify', value: AdminJSPlugin.Fastify },
   { title: '@adminjs/koa', value: AdminJSPlugin.Koa },
   { title: '@adminjs/hapi', value: AdminJSPlugin.Hapi },
-  { title: '@adminjs/nestjs', value: AdminJSPlugin.NestJS, disabled: true },
+  { title: '@adminjs/nestjs', value: AdminJSPlugin.NestJS },
 ];
 
 export const adapterOptions = [

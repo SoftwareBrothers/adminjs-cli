@@ -5,12 +5,12 @@ import chalk from 'chalk';
 import { copy } from 'fs-extra/esm';
 
 import logger from '../../../utils/logger.js';
-import { CreateCommandPromptsAnswers } from '../types.js';
+import { CreateCommandInput } from '../types.js';
 import { templatesDir } from '../utils/templates-dir.js';
 import { BaseCommandHandler } from '../utils/BaseCommandHandler.js';
 import { CONTENT_DIR_NAME, DOTFILES_DIR_NAME } from '../constants.js';
 
-export class BaseSetupHandler extends BaseCommandHandler<CreateCommandPromptsAnswers> {
+export class BaseSetupHandler extends BaseCommandHandler<CreateCommandInput> {
   public async run() {
     logger.info(`Setting up ${chalk.yellow(this.options.projectName)} project's base template.`);
     await this.copyBaseContents();

@@ -10,6 +10,10 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+  ignorePatterns: [
+    'lib',
+    'src/commands/create/templates/**/*',
+  ],
   rules: {
     indent: ['error', 2],
     'max-len': ['error', 120],
@@ -18,6 +22,7 @@ module.exports = {
     semi: ['error', 'always'],
     'no-underscore-dangle': 'off',
     'no-shadow': 'off',
+    'class-methods-use-this': 'off',
     '@typescript-eslint/no-shadow': 'error',
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',

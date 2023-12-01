@@ -4,8 +4,8 @@ import { unflatten } from 'flat';
 import {
   adapterOptions, packageManagerOptions, pluginOptions, databaseDriversForAdapter, environmentVariablesPrompts,
 } from './options.js';
-import { CreateCommandHandler } from './handlers/CreateCommand.handler.js';
-import { CreateCommandPromptsAnswers } from './types.js';
+import { CreateCommand } from './command.js';
+import { CreateCommandInput } from './types.js';
 
 const questions: prompts.PromptObject[] = [
   {
@@ -53,7 +53,6 @@ const questions: prompts.PromptObject[] = [
   ...environmentVariablesPrompts,
 ];
 
-const response = (await prompts(questions)) as unknown as CreateCommandPromptsAnswers;
-
-const handler = new CreateCommandHandler(unflatten(response));
+const response = (await prompts(questions)) as unknown as CreateCommandInput;
+const handler = new CreateCommand(unflatten(response));
 await handler.run();

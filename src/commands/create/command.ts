@@ -3,23 +3,25 @@ import path from 'path';
 
 import chalk from 'chalk';
 
-import {
-  CreateCommandPromptsAnswers,
-} from '../types.js';
-import { BaseCommandHandler } from '../utils/BaseCommandHandler.js';
-import logger from '../../../utils/logger.js';
-import { asyncExec } from '../utils/async-exec.js';
+import logger from '../../utils/logger.js';
 import {
   displayRstInformation, displayWhatsNextTips, reportIssuesTip,
-} from '../../../instructions.js';
-import { displayStartTips } from '../instructions.js';
+} from '../../instructions.js';
 
-import { BaseSetupHandler } from './BaseSetup.handler.js';
-import { LibrarySetupHandler, LibraryType } from './LibrarySetup.handler.js';
-import { EnvironmentVariablesHandler } from './EnvironmentVariables.handler.js';
-import { DatabaseDriverSetupHandler } from './DatabaseDriverSetup.handler.js';
+import { BaseCommandHandler } from './utils/BaseCommandHandler.js';
+import { asyncExec } from './utils/async-exec.js';
+import { displayStartTips } from './instructions.js';
+import { BaseSetupHandler } from './handlers/BaseSetup.handler.js';
+import { LibrarySetupHandler, LibraryType } from './handlers/LibrarySetup.handler.js';
+import { EnvironmentVariablesHandler } from './handlers/EnvironmentVariables.handler.js';
+import { DatabaseDriverSetupHandler } from './handlers/DatabaseDriverSetup.handler.js';
+import { NestSetupHandler } from './handlers/NestSetup.handler.js';
+import {
+  AdminJSPlugin,
+  CreateCommandInput,
+} from './types.js';
 
-export class CreateCommandHandler extends BaseCommandHandler<CreateCommandPromptsAnswers> {
+export class CreateCommand extends BaseCommandHandler<CreateCommandInput> {
   public async run() {
     const cwd = path.join(process.cwd(), this.options.projectName);
     const environmentVariablesHandler = new EnvironmentVariablesHandler(this.options);
@@ -28,10 +30,21 @@ export class CreateCommandHandler extends BaseCommandHandler<CreateCommandPrompt
     const adapterSetupHandler = new LibrarySetupHandler(this.options, LibraryType.Adapter);
     const databaseDriverSetupHandler = new DatabaseDriverSetupHandler(this.options, environmentVariablesHandler);
 
+    let nestSetupHandler: NestSetupHandler;
+    if (this.options.plugin === AdminJSPlugin.NestJS) {
+      nestSetupHandler = new NestSetupHandler(this.options, LibraryType.Plugin);
+    }
+
     try {
       await baseSetupHandler.run();
-      await pluginSetupHandler.run();
-      await adapterSetupHandler.run();
+
+      if (this.options.plugin === AdminJSPlugin.NestJS) {
+        await nestSetupHandler.run();
+      } else {
+        await pluginSetupHandler.run();
+        await adapterSetupHandler.run();
+      }
+
       await databaseDriverSetupHandler.run();
       await environmentVariablesHandler.run();
 
@@ -41,8 +54,13 @@ export class CreateCommandHandler extends BaseCommandHandler<CreateCommandPrompt
 
       logger.info('Running post-setup scripts.');
       const driverInfo = databaseDriverSetupHandler.getDriverInfo();
-      await pluginSetupHandler.postSetup(driverInfo);
-      await adapterSetupHandler.postSetup(driverInfo);
+
+      if (this.options.plugin === AdminJSPlugin.NestJS) {
+        await nestSetupHandler.postSetup(driverInfo);
+      } else {
+        await pluginSetupHandler.postSetup(driverInfo);
+        await adapterSetupHandler.postSetup(driverInfo);
+      }
 
       const buildCommand = `${this.options.packageManager} run build`;
       logger.info(`Building: ${chalk.gray(buildCommand)}`);

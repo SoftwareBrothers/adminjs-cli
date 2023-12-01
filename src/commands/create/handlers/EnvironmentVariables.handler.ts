@@ -5,7 +5,7 @@ import randomstring from 'randomstring';
 import chalk from 'chalk';
 
 import logger from '../../../utils/logger.js';
-import { CreateCommandPromptsAnswers } from '../types.js';
+import { CreateCommandInput } from '../types.js';
 import { BaseCommandHandler } from '../utils/BaseCommandHandler.js';
 
 const DEFAULT_ENVS = {
@@ -19,10 +19,10 @@ const DEFAULT_ENVS = {
   PORT: 3000,
 };
 
-export class EnvironmentVariablesHandler extends BaseCommandHandler<CreateCommandPromptsAnswers> {
+export class EnvironmentVariablesHandler extends BaseCommandHandler<CreateCommandInput> {
   protected environmentVariables: Record<string, unknown>;
 
-  constructor(options: CreateCommandPromptsAnswers) {
+  constructor(options: CreateCommandInput) {
     super(options);
 
     this.environmentVariables = DEFAULT_ENVS;

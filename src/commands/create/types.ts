@@ -32,7 +32,7 @@ export enum DatabaseDriver {
   MongoDB = 'mongodb',
 }
 
-export interface CreateCommandPromptsAnswers {
+export interface CreateCommandInput {
   projectName: string;
   adapter: AdminJSAdapter;
   plugin: AdminJSPlugin;
