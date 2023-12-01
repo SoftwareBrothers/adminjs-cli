@@ -1,0 +1,9 @@
+node_modules
+.github
+commitlint.config.cjs
+.idea
+test
+src
+.releaserc
+.prettierrc
+.eslintrc.cjs
