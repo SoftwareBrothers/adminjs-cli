@@ -15,7 +15,8 @@
     "copy-templates": "copyfiles -u 3 \"./src/commands/create/templates/**/*\" \"./lib/commands/create/\"",
     "lint": "eslint \"src\"",
     "register:local": "yarn global add file:$PWD",
-    "dev": "yarn clean && yarn build && yarn register:local"
+    "dev": "yarn clean && yarn build && yarn register:local",
+    "release": "semantic-release"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
