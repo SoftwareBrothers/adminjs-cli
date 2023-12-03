@@ -62,7 +62,7 @@ export class LibrarySetupHandler extends BaseCommandHandler<CreateCommandInput> 
       }
     } catch (error) {
       // Do nothing, not all plugins/adapters will have an init script
-      if (process.env.DEBUG === 'true') logger.debug(error);
+      if (process.env.DEBUG === 'true') logger.warn(error);
     }
   }
 

@@ -74,10 +74,15 @@ export class CreateCommand extends BaseCommandHandler<CreateCommandInput> {
 
       process.exit(0);
     } catch (error) {
-      logger.error(
-        // eslint-disable-next-line max-len
-        `Encountered an error. Cleaning up working directory. Run command with ${chalk.yellow('DEBUG=true')} to see error details.`,
-      );
+      if (process.env.DEBUG === 'true') {
+        logger.error(error);
+      } else {
+        logger.error(
+          // eslint-disable-next-line max-len
+          `Encountered an error. Cleaning up working directory. Run command with ${chalk.yellow('DEBUG=true')} to see error details.`,
+        );
+      }
+
       logger.info(reportIssuesTip);
       await this.cleanProjectDirectory();
 
@@ -89,7 +94,7 @@ export class CreateCommand extends BaseCommandHandler<CreateCommandInput> {
     try {
       await fs.rm(path.join(process.cwd(), this.options.projectName), { recursive: true, force: true });
     } catch (err) {
-      if (process.env.DEBUG === 'true') logger.debug(err);
+      if (process.env.DEBUG === 'true') logger.warn(err);
       // Fail silently
     }
   }
