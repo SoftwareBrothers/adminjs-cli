@@ -3,7 +3,7 @@ node_modules
 commitlint.config.cjs
 .idea
 test
-src
-.releaserc
-.prettierrc
-.eslintrc.cjs
+/src
+/.releaserc
+/.prettierrc
+/.eslintrc.cjs
