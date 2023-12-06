@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import * as URL from 'url';
 
 import { copy } from 'fs-extra/esm';
 import chalk from 'chalk';
@@ -52,7 +53,9 @@ export class LibrarySetupHandler extends BaseCommandHandler<CreateCommandInput> 
 
     try {
       const initImport = await import(
-        path.join(templatesDir(), this.libraryType, this.libraryName, SCRIPTS_DIR_NAME, scriptName),
+        URL.pathToFileURL(
+          path.join(templatesDir(), this.libraryType, this.libraryName, SCRIPTS_DIR_NAME, scriptName),
+        ).toString()
       );
 
       if (initImport?.default) {
