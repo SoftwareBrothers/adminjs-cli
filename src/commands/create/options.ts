@@ -7,6 +7,7 @@ import {
 export const packageManagerOptions = [
   { title: 'NPM', value: PackageManager.NPM },
   { title: 'Yarn', value: PackageManager.Yarn },
+  { title: 'PNPM', value: PackageManager.PNPM },
 ];
 
 export const pluginOptions = [

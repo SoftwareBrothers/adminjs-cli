@@ -1,3 +1,5 @@
+import { execSync } from 'child_process';
+
 import prompts from 'prompts';
 import { unflatten } from 'flat';
 
@@ -5,7 +7,7 @@ import {
   adapterOptions, packageManagerOptions, pluginOptions, databaseDriversForAdapter, environmentVariablesPrompts,
 } from './options.js';
 import { CreateCommand } from './command.js';
-import { CreateCommandInput } from './types.js';
+import { CreateCommandInput, PackageManager } from './types.js';
 
 const questions: prompts.PromptObject[] = [
   {
@@ -31,6 +33,18 @@ const questions: prompts.PromptObject[] = [
     name: 'packageManager',
     message: 'Select a package manager',
     choices: packageManagerOptions,
+  },
+  {
+    type: (prev) => {
+      if (prev !== PackageManager.Yarn) {
+        return null;
+      }
+      const isYarn1 = execSync('yarn --version', { stdio: 'pipe' }).toString().trim().startsWith('1');
+      return isYarn1 ? null : 'confirm';
+    },
+    name: 'yarnPnp',
+    message: 'Would you like to enable Yarn PnP?',
+    initial: false,
   },
   {
     type: 'select',

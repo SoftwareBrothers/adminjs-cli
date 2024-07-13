@@ -17,6 +17,9 @@ export class BaseSetupHandler extends BaseCommandHandler<CreateCommandInput> {
     await this.modifyPackageName();
     await this.copyDotFile('.eslintrc.cjs');
     await this.copyDotFile('.prettierrc');
+    if (this.options.packageManager === 'yarn') {
+      await this.setupYarnrc(!!this.options.yarnPnp);
+    }
     logger.info('Base template setup successful.');
   }
 
@@ -51,5 +54,22 @@ export class BaseSetupHandler extends BaseCommandHandler<CreateCommandInput> {
       entry,
       destination,
     );
+  }
+
+  protected async setupYarnrc(pnpEnabled: boolean) {
+    const yarnrcPath = path.join(process.cwd(), this.options.projectName, '.yarnrc.yml');
+    let content = pnpEnabled ? 'nodeLinker: pnp' : 'nodeLinker: node-modules';
+
+    // An workaround for dependencies problem
+    // Ref: https://github.com/ueberdosis/tiptap/issues/3746
+    if (pnpEnabled) {
+      content += `
+packageExtensions:
+  '@tiptap/starter-kit@^2.0.0':
+    peerDependencies:
+      '@tiptap/pm': '^2.0.0'`;
+    }
+
+    await fs.writeFile(yarnrcPath, content, 'utf8');
   }
 }

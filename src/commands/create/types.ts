@@ -19,6 +19,7 @@ export enum AdminJSPlugin {
 export enum PackageManager {
   NPM = 'npm',
   Yarn = 'yarn',
+  PNPM = 'pnpm',
 }
 
 export enum DatabaseDriver {
@@ -37,6 +38,7 @@ export interface CreateCommandInput {
   adapter: AdminJSAdapter;
   plugin: AdminJSPlugin;
   packageManager: PackageManager;
+  yarnPnp?: boolean;
   databaseDriver?: DatabaseDriver;
   env?: {
     DATABASE_URL: string;
