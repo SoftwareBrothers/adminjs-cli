@@ -1,5 +1,5 @@
 {
   "@adminjs/fastify": "^4.1.0",
-  "@fastify/session": "^10.1.1",
-  "fastify": "^4.24.3"
+  "@fastify/session": "^11.1.0",
+  "fastify": "^5.2.1"
 }
